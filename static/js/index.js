@@ -8,18 +8,27 @@ const listBox = document.querySelector(".gongde");
 const setting = document.querySelector(".setting");
 var gd = 1;
 
+// 从本地存储读取总功德数，如果没有则初始化为0
+let totalMerits = parseInt(localStorage.getItem('totalMerits')) || 0;
+
 // 新增：总功德数变量
-let totalMerits = 0;
+//let totalMerits = 0;
+
 // 新增：创建总功德数显示元素
 const totalMeritsElement = document.createElement("div");
 totalMeritsElement.className = "total-merits";
-totalMeritsElement.innerText = "总投喂次数: 0";
+totalMeritsElement.innerText = `总投喂次数: ${totalMerits}`;
 document.body.appendChild(totalMeritsElement);
 
 //声音素材
 //const audio = new Audio();
 //audio.src = "./static/audio.mp3"
 //audio.volume = 1;
+
+// 保存功德数到本地存储
+const saveMeritsToStorage = () => {
+  localStorage.setItem('totalMerits', totalMerits);
+};
 
 //动态创建功德弹窗
 const createAlert = () => {
@@ -36,6 +45,7 @@ const createAlert = () => {
   // 新增：更新总功德数
   totalMerits += gd;
   totalMeritsElement.innerText = `总投喂次数: ${totalMerits}`;
+  saveMeritsToStorage();
 }
 
 //木鱼点击后的效果
@@ -67,3 +77,13 @@ window.addEventListener("keydown", function (event) {
     }
   }
 })
+
+// 设置按钮 - 修改为直接设置总功德数
+setting.onclick = () => {
+  const input = prompt("修改投喂次数:", totalMerits);
+  if (input !== null && !isNaN(input) && input.trim() !== '') {
+    totalMerits = parseInt(input);
+    totalMeritsElement.innerText = `总投喂次数: ${totalMerits}`;
+    saveMeritsToStorage();
+  }
+};

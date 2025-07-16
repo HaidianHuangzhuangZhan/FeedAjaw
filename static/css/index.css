@@ -66,10 +66,34 @@ body {
   }
 }
 .setting {
-  position: relative;
-  left: 15px;
-  top: 15px;
+  position: fixed; /* 固定定位 */
+  top: 20px;       /* 距离顶部20px */
+  left: 20px;      /* 距离左侧20px */
+  z-index: 200;    /* 确保在最上层 */
 }
 .clickDown {
   transform: scale(0.9);
+}
+/* 新增：提示文字样式 */
+.click-hint {
+  margin-top: 20px;
+  font-size: 32px;
+  font-weight: 500;
+  color: #555;
+  text-align: center;
+  opacity: 0.8;
+  animation: fadeInOut 3s infinite; /* 添加呼吸效果 */
+}
+
+/* 呼吸动画 */
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .click-hint {
+    font-size: 20px;
+    margin-top: 15px;
+  }
 }
